@@ -4,7 +4,7 @@ import { useFormBuilder } from '../../hooks/useFormBuilder.js';
 import { evaluateDependencyRule } from '../../engine/dependencyEngine.js';
 import { questionTypeRegistry } from '../QuestionTypes/index.js';
 
-export function PreviewQuestion({ questionId, depth, numberPrefix, answers, onAnswer }) {
+export function PreviewQuestion({ questionId, depth, numberPrefix, answers, onAnswer, errors = {} }) {
   const { state } = useFormBuilder();
   const question = state.questions[questionId];
 
@@ -25,7 +25,7 @@ export function PreviewQuestion({ questionId, depth, numberPrefix, answers, onAn
 
   return (
     <div
-      className={`preview-question depth-${depth}`}
+      className={`preview-question depth-${depth} ${errors[questionId] ? 'error-pulse' : ''}`}
       style={{ marginLeft: depth > 0 ? depth * 20 : 0 }}
     >
       {question.type === 'section_header' ? (
@@ -49,12 +49,19 @@ export function PreviewQuestion({ questionId, depth, numberPrefix, answers, onAn
             <p className="preview-q-desc">{question.description}</p>
           )}
           {TypeRenderer && (
-            <div className="preview-q-input">
+            <div className={`preview-q-input ${errors[questionId] ? 'has-error' : ''}`}>
               <TypeRenderer
                 question={question}
                 value={answers[questionId]}
                 onChange={(value) => onAnswer(questionId, value)}
               />
+            </div>
+          )}
+          {errors[questionId] && (
+            <div className="preview-error-messages">
+              {errors[questionId].map((err, i) => (
+                <div key={i} className="preview-error-msg">{err}</div>
+              ))}
             </div>
           )}
         </>
@@ -69,6 +76,7 @@ export function PreviewQuestion({ questionId, depth, numberPrefix, answers, onAn
           numberPrefix={`${numberPrefix}.${i + 1}`}
           answers={answers}
           onAnswer={onAnswer}
+          errors={errors}
         />
       ))}
     </div>

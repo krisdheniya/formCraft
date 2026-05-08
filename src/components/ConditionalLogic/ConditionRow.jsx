@@ -9,10 +9,15 @@ export function ConditionRow({ condition, questionId, onChange, onDelete, index 
   const { state } = useFormBuilder();
   const numberMap = useNumbering();
 
-  // All questions except this one that can be parent
-  const candidateParents = Object.values(state.questions).filter(
-    (q) => q.id !== questionId
-  );
+  // All questions except this one and its descendants (to avoid cycles)
+  // Sorted by question number for easier lookup
+  const candidateParents = Object.values(state.questions)
+    .filter((q) => q.id !== questionId)
+    .sort((a, b) => {
+      const numA = numberMap[a.id] || '';
+      const numB = numberMap[b.id] || '';
+      return numA.localeCompare(numB, undefined, { numeric: true });
+    });
 
   const selectedParent = state.questions[condition.parentQuestionId];
 

@@ -1,6 +1,6 @@
 // components/FormBuilder/FormBuilderHeader.jsx
 import React, { useState } from 'react';
-import { Save, Eye, EyeOff, Trash2, Download, Upload } from 'lucide-react';
+import { Eye, EyeOff, Trash2, Download } from 'lucide-react';
 import { useFormBuilder } from '../../hooks/useFormBuilder.js';
 import { useQuestionActions } from '../../hooks/useQuestionActions.js';
 import { validateForm } from '../../engine/validationEngine.js';
@@ -16,16 +16,6 @@ export function FormBuilderHeader({ mode, onModeChange }) {
   const [editingTitle, setEditingTitle] = useState(false);
   const [localTitle, setLocalTitle] = useState(state.title);
 
-  const handleSave = () => {
-    const { isValid, errors } = validateForm(state);
-    if (!isValid) {
-      const count = Object.keys(errors).length;
-      toast.error(`${count} question${count !== 1 ? 's have' : ' has'} validation errors. Fix them before saving.`);
-      return;
-    }
-    const ok = saveToLocalStorage(state);
-    toast[ok ? 'success' : 'error'](ok ? 'Form saved successfully!' : 'Save failed — storage unavailable');
-  };
 
   const handleExport = () => {
     const json = JSON.stringify(state, null, 2);
@@ -39,22 +29,6 @@ export function FormBuilderHeader({ mode, onModeChange }) {
     toast.success('Form exported as JSON');
   };
 
-  const handleImport = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      try {
-        const data = JSON.parse(ev.target.result);
-        loadForm(data);
-        toast.success('Form imported successfully!');
-      } catch {
-        toast.error('Invalid JSON file');
-      }
-    };
-    reader.readAsText(file);
-    e.target.value = '';
-  };
 
   const handleClear = () => {
     clearForm();
@@ -102,29 +76,18 @@ export function FormBuilderHeader({ mode, onModeChange }) {
       <div className="header-actions">
         {/* Mode toggle */}
         <button
-          className={`btn btn-ghost ${mode === 'preview' ? 'active' : ''}`}
+          className={`btn btn-ghost preview-toggle-highlight ${mode === 'preview' ? 'active' : ''}`}
           onClick={() => onModeChange(mode === 'builder' ? 'preview' : 'builder')}
           id="toggle-preview-btn"
         >
           {mode === 'preview' ? <EyeOff size={16} /> : <Eye size={16} />}
-          {mode === 'preview' ? 'Edit' : 'Preview'}
-        </button>
-
-        {/* Save */}
-        <button className="btn btn-ghost" onClick={handleSave} id="save-btn">
-          <Save size={16} /> Save
+          {mode === 'preview' ? 'Edit Form' : 'Preview Form'}
         </button>
 
         {/* Export JSON */}
         <button className="btn btn-ghost" onClick={handleExport} id="export-btn" title="Export JSON">
           <Download size={16} />
         </button>
-
-        {/* Import JSON */}
-        <label className="btn btn-ghost" title="Import JSON" style={{ cursor: 'pointer' }}>
-          <Upload size={16} />
-          <input type="file" accept=".json" onChange={handleImport} style={{ display: 'none' }} />
-        </label>
 
         {/* Clear */}
         <button className="btn btn-danger-ghost" onClick={() => setClearDialog(true)} id="clear-btn">

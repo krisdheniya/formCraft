@@ -14,7 +14,10 @@ function createQuestion(parentId, type) {
     type: type || 'short_answer',
     text: '',
     description: '',
-    placeholder: '',
+    placeholder: 
+      type === 'phone' ? '9876543210' : 
+      type === 'email' ? 'krish@infollion.com' : 
+      type === 'short_answer' ? 'Krish' : '',
     required: false,
     options: ['multiple_choice', 'checkbox', 'dropdown'].includes(type)
       ? [
@@ -22,7 +25,11 @@ function createQuestion(parentId, type) {
           { id: generateId(), label: 'Option 2', value: 'option_2' },
         ]
       : undefined,
-    validationRules: [],
+    validationRules: type === 'email' 
+      ? [{ id: generateId(), type: 'email_format', value: '', message: 'Enter a valid email' }]
+      : type === 'phone'
+      ? [{ id: generateId(), type: 'phone_format', value: '', message: 'Enter a valid phone number' }]
+      : [],
     dependencyRule: undefined,
     childIds: [],
     metadata: {

@@ -7,6 +7,18 @@ import { QUESTION_TYPES, MAX_DEPTH } from '../../utils/constants.js';
 export function AddQuestionButton({ parentId = null, depth = 0, label }) {
   const { addQuestion } = useQuestionActions();
   const [open, setOpen] = useState(false);
+  const wrapperRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const handleClickOutside = (e) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [open]);
 
   const isMaxDepth = depth >= MAX_DEPTH;
 
@@ -24,10 +36,10 @@ export function AddQuestionButton({ parentId = null, depth = 0, label }) {
   };
 
   return (
-    <div className="add-question-wrapper">
+    <div className="add-question-wrapper" ref={wrapperRef}>
       <button
         className="add-question-btn"
-        onClick={() => (open ? handleAdd('short_answer') : setOpen(true))}
+        onClick={() => setOpen(!open)}
         id={`add-btn-${parentId || 'root'}`}
       >
         <Plus size={14} />
@@ -36,23 +48,20 @@ export function AddQuestionButton({ parentId = null, depth = 0, label }) {
       </button>
 
       {open && (
-        <>
-          <div className="add-question-overlay" onClick={() => setOpen(false)} />
-          <div className="add-question-dropdown">
-            <div className="dropdown-header">Choose question type</div>
-            <div className="dropdown-grid">
-              {QUESTION_TYPES.map((t) => (
-                <button
-                  key={t.value}
-                  className="dropdown-type-btn"
-                  onClick={() => handleAdd(t.value)}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
+        <div className="add-question-dropdown">
+          <div className="dropdown-header">Choose question type</div>
+          <div className="dropdown-grid">
+            {QUESTION_TYPES.map((t) => (
+              <button
+                key={t.value}
+                className="dropdown-type-btn"
+                onClick={() => handleAdd(t.value)}
+              >
+                {t.label}
+              </button>
+            ))}
           </div>
-        </>
+        </div>
       )}
     </div>
   );

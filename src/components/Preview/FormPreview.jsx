@@ -11,9 +11,17 @@ import { useToast } from '../shared/Toast.jsx';
 export function FormPreview() {
   const { state } = useFormBuilder();
   const toast = useToast();
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState(() => {
+    const saved = localStorage.getItem(`form_answers_${state.id || 'default'}`);
+    return saved ? JSON.parse(saved) : {};
+  });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
+
+  // Auto-save answers on change
+  React.useEffect(() => {
+    localStorage.setItem(`form_answers_${state.id || 'default'}`, JSON.stringify(answers));
+  }, [answers, state.id]);
 
   const handleAnswer = (qId, value) => {
     setAnswers((prev) => ({ ...prev, [qId]: value }));
@@ -43,6 +51,7 @@ export function FormPreview() {
     setAnswers({});
     setErrors({});
     setSubmitted(false);
+    localStorage.removeItem(`form_answers_${state.id || 'default'}`);
   };
 
   if (submitted) {
@@ -73,6 +82,7 @@ export function FormPreview() {
                 depth={0}
                 answers={answers}
                 onAnswer={handleAnswer}
+                errors={errors}
               />
             ))}
           </div>

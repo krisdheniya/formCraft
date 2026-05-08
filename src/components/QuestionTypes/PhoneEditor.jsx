@@ -4,7 +4,7 @@ import React from 'react';
 export function PhoneEditor({ question }) {
   return (
     <div className="type-editor">
-      <input type="tel" className="preview-input" placeholder={question.placeholder || '+1 (000) 000-0000'} disabled />
+      <input type="tel" className="preview-input" placeholder={question.placeholder || '9876543210'} disabled />
     </div>
   );
 }
@@ -14,7 +14,7 @@ export function PhonePreview({ question, value, onChange }) {
     <input
       type="tel"
       className="preview-input"
-      placeholder={question.placeholder || '+1 (000) 000-0000'}
+      placeholder={question.placeholder || '9876543210'}
       value={value || ''}
       onChange={(e) => onChange(e.target.value)}
     />

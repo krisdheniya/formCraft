@@ -10,19 +10,23 @@ export function DependencyBadge({ dependencyRule }) {
 
   if (!dependencyRule?.conditions?.length) return null;
 
-  const parts = dependencyRule.conditions.map((cond, i) => {
-    const parentQ = state.questions[cond.parentQuestionId];
-    const num = numberMap[cond.parentQuestionId] || '?';
-    const val = cond.operator === 'is_answered' ? '' : ` = "${String(cond.value)}"`;
-    return (
-      <span key={i} className="dep-badge-condition">
-        Q{num}{val ? val : ' is answered'}
-        {i < dependencyRule.conditions.length - 1 && (
-          <span className="dep-badge-logic"> {dependencyRule.logic} </span>
-        )}
-      </span>
-    );
-  });
+  const parts = dependencyRule.conditions
+    .filter(cond => cond.operator === 'is_answered' || (cond.value !== undefined && cond.value !== null && String(cond.value).trim() !== ''))
+    .map((cond, i, filtered) => {
+      const parentQ = state.questions[cond.parentQuestionId];
+      const num = numberMap[cond.parentQuestionId] || '?';
+      const val = cond.operator === 'is_answered' ? '' : ` = "${String(cond.value)}"`;
+      return (
+        <span key={i} className="dep-badge-condition">
+          Q{num}{val ? val : ' is answered'}
+          {i < filtered.length - 1 && (
+            <span className="dep-badge-logic"> {dependencyRule.logic} </span>
+          )}
+        </span>
+      );
+    });
+
+  if (parts.length === 0) return null;
 
   return (
     <div className="dep-badge" title="This question has conditional visibility">

@@ -70,8 +70,8 @@ export const QuestionNode = memo(function QuestionNode({ questionId, depth = 0, 
             <QuestionBody questionId={questionId} />
             <QuestionSettings questionId={questionId} />
 
-            {/* Conditional logic (always show for child questions; optional for root) */}
-            <DependencyEditor questionId={questionId} />
+            {/* Conditional logic (only for child questions) */}
+            {depth > 0 && <DependencyEditor questionId={questionId} />}
 
             {/* Recursive children */}
             <QuestionChildren

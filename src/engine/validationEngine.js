@@ -88,8 +88,8 @@ export function validateAnswer(question, answer) {
         }
         break;
       case 'phone_format':
-        if (answer && !/^\+?[\d\s\-()]{7,15}$/.test(answer)) {
-          errors.push(rule.message || 'Invalid phone number');
+        if (answer && !/^\d{10}$/.test(answer)) {
+          errors.push(rule.message || 'Phone number must be exactly 10 digits');
         }
         break;
       default:

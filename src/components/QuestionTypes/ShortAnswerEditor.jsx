@@ -8,7 +8,7 @@ export function ShortAnswerEditor({ question }) {
         <input
           type="text"
           className="preview-input"
-          placeholder={question.placeholder || 'Short answer text…'}
+          placeholder={question.placeholder || 'Krish'}
           disabled
         />
       </div>
@@ -21,7 +21,7 @@ export function ShortAnswerPreview({ question, value, onChange }) {
     <input
       type="text"
       className="preview-input"
-      placeholder={question.placeholder || 'Your answer…'}
+      placeholder={question.placeholder || 'Krish'}
       value={value || ''}
       onChange={(e) => onChange(e.target.value)}
     />
