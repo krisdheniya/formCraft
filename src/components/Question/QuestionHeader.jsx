@@ -66,8 +66,8 @@ export function QuestionHeader({ questionId, numberPrefix, depth, dragHandleProp
       <button
         className="delete-btn"
         onClick={() => onDeleteRequest(questionId, descendantCount)}
-        title={`Delete question${descendantCount > 0 ? ` and ${descendantCount} nested sub-question(s)` : ''}`}
-        aria-label="Delete question"
+        title={question.type === 'section_header' ? 'Delete section header' : `Delete question${descendantCount > 0 ? ` and ${descendantCount} nested sub-question(s)` : ''}`}
+        aria-label={question.type === 'section_header' ? 'Delete section header' : 'Delete question'}
       >
         <Trash2 size={15} />
       </button>

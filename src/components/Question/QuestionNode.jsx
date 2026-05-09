@@ -42,7 +42,9 @@ export const QuestionNode = memo(function QuestionNode({ questionId, depth = 0, 
   const handleDeleteConfirm = () => {
     const { id, count } = deleteDialog;
     deleteQuestion(id);
-    if (count > 0) {
+    if (question.type === 'section_header') {
+      toast.warning('Deleted section header');
+    } else if (count > 0) {
       toast.warning(`Deleted question and ${count} nested sub-question${count !== 1 ? 's' : ''}`);
     }
     setDeleteDialog(null);
@@ -96,9 +98,11 @@ export const QuestionNode = memo(function QuestionNode({ questionId, depth = 0, 
       {deleteDialog && (
         <ConfirmDialog
           isOpen={true}
-          title="Delete Question"
+          title={question.type === 'section_header' ? "Delete Section Header" : "Delete Question"}
           message={
-            deleteDialog.count > 0
+            question.type === 'section_header'
+              ? `Delete this section header? This action cannot be undone.`
+              : deleteDialog.count > 0
               ? `Delete Q${numberPrefix} and its ${deleteDialog.count} nested sub-question${deleteDialog.count !== 1 ? 's' : ''}? This action cannot be undone.`
               : `Delete Q${numberPrefix}? This action cannot be undone.`
           }
