@@ -21,7 +21,7 @@ export function QuestionHeader({ questionId, numberPrefix, depth, dragHandleProp
   return (
     <div className="question-header" style={{ borderLeftColor: color }}>
       {/* Drag handle (root-level only) */}
-      {depth === 0 && dragHandleProps && (
+      {depth === 0 && dragHandleProps && question.type !== 'section_header' && (
         <span className="drag-handle" {...dragHandleProps} title="Drag to reorder">
           <GripVertical size={16} />
         </span>
@@ -38,9 +38,11 @@ export function QuestionHeader({ questionId, numberPrefix, depth, dragHandleProp
       </button>
 
       {/* Question number badge */}
-      <span className="question-number" style={{ color }}>
-        Q{numberPrefix}
-      </span>
+      {question.type !== 'section_header' && (
+        <span className="question-number" style={{ color }}>
+          Q{numberPrefix}
+        </span>
+      )}
 
       {/* Question text preview (when collapsed) or placeholder */}
       <span className="question-text-preview">

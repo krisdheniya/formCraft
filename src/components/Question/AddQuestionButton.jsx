@@ -51,7 +51,7 @@ export function AddQuestionButton({ parentId = null, depth = 0, label }) {
         <div className="add-question-dropdown">
           <div className="dropdown-header">Choose question type</div>
           <div className="dropdown-grid">
-            {QUESTION_TYPES.map((t) => (
+            {QUESTION_TYPES.filter(t => t.value !== 'section_header').map((t) => (
               <button
                 key={t.value}
                 className="dropdown-type-btn"

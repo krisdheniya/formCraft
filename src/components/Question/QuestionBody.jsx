@@ -79,19 +79,21 @@ export function QuestionBody({ questionId }) {
       />
 
       {/* Question type selector */}
-      <div className="type-selector-row">
-        <label className="type-selector-label">Type:</label>
-        <select
-          className="type-selector"
-          value={question.type}
-          onChange={(e) => handleTypeChange(e.target.value)}
-          aria-label="Question type"
-        >
-          {QUESTION_TYPES.map((t) => (
-            <option key={t.value} value={t.value}>{t.label}</option>
-          ))}
-        </select>
-      </div>
+      {question.type !== 'section_header' && (
+        <div className="type-selector-row">
+          <label className="type-selector-label">Type:</label>
+          <select
+            className="type-selector"
+            value={question.type}
+            onChange={(e) => handleTypeChange(e.target.value)}
+            aria-label="Question type"
+          >
+            {QUESTION_TYPES.filter(t => t.value !== 'section_header').map((t) => (
+              <option key={t.value} value={t.value}>{t.label}</option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {/* Type-specific editor */}
       {TypeEditor && <TypeEditor question={question} />}

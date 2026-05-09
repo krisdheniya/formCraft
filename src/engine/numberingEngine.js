@@ -6,12 +6,23 @@
  */
 export function generateNumberMap(questions, rootIds, prefix = '') {
   const result = {};
+  let counter = 0;
 
-  rootIds.forEach((id, index) => {
-    const number = prefix ? `${prefix}.${index + 1}` : `${index + 1}`;
+  rootIds.forEach((id) => {
+    const question = questions[id];
+    
+    if (question?.type === 'section_header') {
+      if (question?.childIds?.length) {
+        const childNumbers = generateNumberMap(questions, question.childIds, prefix);
+        Object.assign(result, childNumbers);
+      }
+      return;
+    }
+
+    counter++;
+    const number = prefix ? `${prefix}.${counter}` : `${counter}`;
     result[id] = number;
 
-    const question = questions[id];
     if (question?.childIds?.length) {
       const childNumbers = generateNumberMap(questions, question.childIds, number);
       Object.assign(result, childNumbers);

@@ -68,7 +68,7 @@ export const QuestionNode = memo(function QuestionNode({ questionId, depth = 0, 
         {!question.metadata.collapsed && (
           <div className="question-content">
             <QuestionBody questionId={questionId} />
-            <QuestionSettings questionId={questionId} />
+            {question.type !== 'section_header' && <QuestionSettings questionId={questionId} />}
 
             {/* Conditional logic (only for child questions) */}
             {depth > 0 && <DependencyEditor questionId={questionId} />}
