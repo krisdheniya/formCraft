@@ -13,11 +13,17 @@ A robust, feature-rich dynamic nested form builder application built with React.
 - **Infinite Nesting (Sub-questions)**: Create deep hierarchies of sub-questions with automatic, hierarchical numbering (e.g., Q1, Q1.1, Q1.1.1).
 - **Multiple Question Types**: Supports various input forms including:
   - Short Answer
-  - Email (with auto-validation)
-  - Phone (with auto-validation)
+  - Long Answer
+  - True / False
   - Multiple Choice
   - Checkboxes
   - Dropdown
+  - Number
+  - Date
+  - Email (with auto-validation)
+  - Phone (with auto-validation)
+  - File Upload
+  - Rating
 - **Conditional Logic Engine**: Attach dependency rules to sub-questions so they only appear if a parent question matches specific criteria (e.g., "Show if Q1 is 'Option 1'").
 - **Drag & Drop Reordering**: Easily reorganize root questions and sub-questions using a fluid drag-and-drop interface.
 - **Auto-Save & Local Storage**: Automatically saves the form state to the browser's local storage to prevent data loss.
@@ -48,7 +54,7 @@ Make sure you have [Node.js](https://nodejs.org/) installed (v18+ recommended).
 
 1. Clone the repository and navigate to the project directory:
    ```bash
-   cd task_intern2
+   cd formMaker
    ```
 
 2. Install the required dependencies:
