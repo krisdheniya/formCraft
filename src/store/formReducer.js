@@ -133,12 +133,6 @@ export function formReducer(state, action) {
       const existing = state.questions[id];
       if (!existing) return state;
 
-      // TWO WAY SYNC: Section Header text -> Form Title
-      let newTitle = state.title;
-      if (existing.type === 'section_header' && changes.text !== undefined) {
-        newTitle = changes.text;
-      }
-
       // If changing type to one that can't have children, cascade-delete children
       let extraQuestions = {};
       let extraRootIds = state.rootQuestionIds;
@@ -167,7 +161,6 @@ export function formReducer(state, action) {
 
       return {
         ...state,
-        title: newTitle,
         rootQuestionIds: extraRootIds,
         questions: {
           ...baseQuestions,
@@ -245,22 +238,9 @@ export function formReducer(state, action) {
 
     // ─── SET FORM META ─────────────────────────────────────────────────────
     case FormActions.SET_FORM_META: {
-      const newQuestions = { ...state.questions };
-      if (action.payload.title !== undefined) {
-        // sync Form Title -> first Section Header text
-        const headerId = state.rootQuestionIds.find(id => state.questions[id]?.type === 'section_header');
-        if (headerId) {
-          newQuestions[headerId] = {
-            ...newQuestions[headerId],
-            text: action.payload.title
-          };
-        }
-      }
-
       return {
         ...state,
         ...action.payload,
-        questions: newQuestions,
         updatedAt: new Date().toISOString(),
       };
     }

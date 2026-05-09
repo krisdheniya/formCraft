@@ -21,7 +21,7 @@ export function QuestionHeader({ questionId, numberPrefix, depth, dragHandleProp
   return (
     <div className="question-header" style={{ borderLeftColor: color }}>
       {/* Drag handle (root-level only) */}
-      {depth === 0 && dragHandleProps && question.type !== 'section_header' && (
+      {depth === 0 && dragHandleProps && (
         <span className="drag-handle" {...dragHandleProps} title="Drag to reorder">
           <GripVertical size={16} />
         </span>

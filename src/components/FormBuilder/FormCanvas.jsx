@@ -8,6 +8,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
+import { Plus } from 'lucide-react';
 import {
   SortableContext,
   sortableKeyboardCoordinates,
@@ -104,8 +105,16 @@ export function FormCanvas() {
         </SortableContext>
       </DndContext>
 
-      <div className="canvas-footer">
+      <div className="canvas-footer" style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'flex-start' }}>
         <AddQuestionButton parentId={null} depth={0} />
+        <button 
+          className="add-question-btn" 
+          onClick={() => addQuestion(null, 'section_header')}
+          title="Add Section Header"
+        >
+          <Plus size={14} />
+          <span>Add Section Header</span>
+        </button>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ export function ConditionRow({ condition, questionId, onChange, onDelete, index 
   // All questions except this one and its descendants (to avoid cycles)
   // Sorted by question number for easier lookup
   const candidateParents = Object.values(state.questions)
-    .filter((q) => q.id !== questionId)
+    .filter((q) => q.id !== questionId && q.type !== 'section_header')
     .sort((a, b) => {
       const numA = numberMap[a.id] || '';
       const numB = numberMap[b.id] || '';

@@ -39,7 +39,7 @@ export const TYPES_WITH_CHILDREN = [
 
 export const MAX_DEPTH = 5;
 export const STORAGE_KEY = 'form_builder_state_v1';
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
 
 export const VALIDATION_RULES_BY_TYPE = {
   short_answer:    ['required', 'min_length', 'max_length', 'regex'],

@@ -1,6 +1,7 @@
 // store/initialState.js — Default empty form state
 import { generateId } from '../utils/idGenerator.js';
 import { loadFromLocalStorage } from '../utils/localStorageUtils.js';
+import { SCHEMA_VERSION } from '../utils/constants.js';
 
 export function createEmptyForm() {
   const headerId = generateId();
@@ -8,7 +9,7 @@ export function createEmptyForm() {
     id: generateId(),
     title: 'Untitled Form',
     description: '',
-    version: 1,
+    version: SCHEMA_VERSION,
     rootQuestionIds: [headerId],
     questions: {
       [headerId]: {
