@@ -42,7 +42,7 @@ export function FormBuilderHeader({ mode, onModeChange }) {
     setEditingTitle(false);
   };
 
-  const qCount = Object.keys(state.questions).length;
+  const qCount = Object.values(state.questions).filter(q => q.type !== 'section_header').length;
 
   return (
     <header className="builder-header">
