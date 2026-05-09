@@ -3,9 +3,19 @@
 A robust, feature-rich dynamic nested form builder application built with React. This application allows users to create complex hierarchical forms with nested questions, conditional logic, various input types, and drag-and-drop reordering capabilities.
 
 ## Live Demo
-> **[Link to Live Deployment]** *https://form-maker-ashen.vercel.app/*
+> **Link to Live Deployment** *https://form-crafft-ashen.vercel.app/*
 
 ---
+## Demo Images
+
+<img width="1919" height="1024" alt="Screenshot 2026-05-09 172336" src="https://github.com/user-attachments/assets/61e5d42d-4a6d-409f-9e1c-caf422fcd121" />
+
+<img width="1919" height="884" alt="Screenshot 2026-05-09 174936" src="https://github.com/user-attachments/assets/70b8bbc1-71d2-4f71-8438-2a0496376750" />
+
+<img width="1895" height="871" alt="Screenshot 2026-05-09 175110" src="https://github.com/user-attachments/assets/eb96f2ba-6951-4a12-b4f2-d000fd53b7a5" />
+
+<img width="1919" height="729" alt="Screenshot 2026-05-09 175244" src="https://github.com/user-attachments/assets/9f6c5ca8-a994-47b7-aa2a-d8e25dfa8e60" />
+
 
 ## Features
 
@@ -77,12 +87,12 @@ This project includes a multi-stage Dockerfile that builds the React application
 
 ### Build the Image
 ```bash
-docker build -t form-maker .
+docker build -t form-craft .
 ```
 
 ### Run the Container
 ```bash
-docker run -p 3000:80 form-maker
+docker run -p 3000:80 form-craft
 ```
 *The app will be accessible at `http://localhost:3000`.*
 
